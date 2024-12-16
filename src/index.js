@@ -16,7 +16,10 @@ export default function loader(source) {
     this.cacheable();
   }
 
-  const options = loaderUtils.getOptions(this) || {};
+  const options =
+    this.query && this.query.startsWith && this.query.startsWith("?")
+      ? loaderUtils.parseQuery(this.query)
+      : loaderUtils.getOptions(this) || {};
   const cacheParserResults = !!options.cache;
   const optimizeParser = options.optimize || 'speed';
   const trace = !!options.trace;
